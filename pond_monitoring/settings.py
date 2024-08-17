@@ -27,7 +27,12 @@ SECRET_KEY = 'django-insecure-w3!fya9yil34c$z0f3n+t&jnl(=k_*pq1%r(8ajowdsxc9y8_u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.137.1','localhost','*']
+ALLOWED_HOSTS = ['pondmonitoring-dk6q-main-3mgjivlwka-wm.a.run.app','127.0.0.1', '192.168.137.1','localhost','*']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://pondmonitoring-dk6q-main-3mgjivlwka-wm.a.run.app',
+]
+
 
 
 # Application definition
