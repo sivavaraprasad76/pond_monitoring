@@ -97,7 +97,7 @@ def dashboard(request):
         'latest_records': latest_records,
     }
 
-    if pond_data_graph.exists():
+    """if pond_data_graph.exists():
         # Generate graphs using the latest 4000 records
         context['do_graph'] = generate_graph(pond_data_graph, 'dissolved_oxygen', 'Dissolved Oxygen(mg/L)')
         context['temp_graph'] = generate_graph(pond_data_graph, 'temperature', 'Temperature(°C)')
@@ -106,7 +106,7 @@ def dashboard(request):
         context['tds_graph'] = generate_graph(pond_data_graph, 'tds', 'TDS(ppm)')
         context['do_temp_graph'] = generate_xy_graph(pond_data_graph, 'temperature', 'dissolved_oxygen', 'DO vs Temperature')
         context['ph_temp_graph'] = generate_xy_graph(pond_data_graph, 'temperature', 'ph', 'pH vs Temperature')
-        context['all_data_graph'] = generate_all_data_graph(pond_data_graph)
+        context['all_data_graph'] = generate_all_data_graph(pond_data_graph)"""
     
     if pond_data_stats.exists():
         # Calculate statistics using the latest 24 records
@@ -147,7 +147,7 @@ def Sample(request):
         'latest_records': latest_records,
     }
 
-    if pond_data_graph.exists():
+    """if pond_data_graph.exists():
         # Generate graphs using the latest 4000 records
         context['do_graph'] = generate_graph(pond_data_graph, 'dissolved_oxygen', 'Dissolved Oxygen(mg/L)')
         context['temp_graph'] = generate_graph(pond_data_graph, 'temperature', 'Temperature(°C)')
@@ -156,7 +156,7 @@ def Sample(request):
         context['tds_graph'] = generate_graph(pond_data_graph, 'tds', 'TDS(ppm)')
         context['do_temp_graph'] = generate_xy_graph(pond_data_graph, 'temperature', 'dissolved_oxygen', 'DO vs Temperature')
         context['ph_temp_graph'] = generate_xy_graph(pond_data_graph, 'temperature', 'ph', 'pH vs Temperature')
-        context['all_data_graph'] = generate_all_data_graph(pond_data_graph)
+        context['all_data_graph'] = generate_all_data_graph(pond_data_graph)"""
     
     if pond_data_stats.exists():
         # Calculate statistics using the latest 24 records
