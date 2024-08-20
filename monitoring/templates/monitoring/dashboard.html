@@ -7,176 +7,174 @@
     <title>Pond Monitoring</title>
     <style>
         body {
-            font-family: 'Tableau', Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-        }
+    font-family: 'Tableau', Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
 
-        header {
-            background-color: #a98ff1;
-            padding: 10px 0;
-        }
+header {
+    background-color: #a98ff1;
+    padding: 10px 0;
+}
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
 
-        .left-links, .right-links {
-            display: flex;
-            gap: 30px;
-        }
+.left-links, .right-links {
+    display: flex;
+    gap: 30px;
+}
 
-        .center-message {
-            color: white;
-            font-size: 18px;
-        }
+.center-message {
+    color: white;
+    font-size: 18px;
+}
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-        }
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
 
-        nav a:hover {
-            color: black;
-        }
+nav a:hover {
+    color: black;
+}
 
-        .cards-caption {
-            text-align: left;
-            margin: 10px 20px;
-        }
+.cards-caption {
+    text-align: left;
+    margin: 10px 20px;
+}
 
-        .cards-caption h3 {
-            font-size: 18px;
-            margin: 0;
-        }
+.cards-caption h3 {
+    font-size: 18px;
+    margin: 0;
+}
 
-        .cards-container {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 20px;
-            border-radius: 20px;
-            flex-wrap: nowrap; /* Ensure cards are in a single line */
-        }
+.cards-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 20px;
+    border-radius: 20px;
+    flex-wrap: nowrap; /* Ensure cards are in a single line */
+}
 
-        .value-card {
-            background-color: rgb(136, 221, 247);
-            border-radius: 20px;
-            border: 1px solid #ccc;
-            border-left: none; /* Remove left border */
-            border-radius: 0; /* Remove border radius */
-            width: 15%; /* Decrease card width */
-            padding: 20px;
-            box-shadow: none; /* Remove box shadow */
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin-bottom: 0; /* Remove bottom margin */
-            cursor: pointer;
-            flex-shrink: 0; /* Prevent cards from shrinking */
-        }
+.value-card {
+    background-color: rgb(136, 221, 247);
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    border-left: none; /* Remove left border */
+    border-radius: 0; /* Remove border radius */
+    width: 15%; /* Decrease card width */
+    padding: 20px;
+    box-shadow: none; /* Remove box shadow */
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 0; /* Remove bottom margin */
+    cursor: pointer;
+    flex-shrink: 0; /* Prevent cards from shrinking */
+}
 
-        .value-card:first-child {
-            border-left: 1px solid #ccc; /* Add left border to the first card */
-        }
+.value-card:first-child {
+    border-left: 1px solid #ccc; /* Add left border to the first card */
+}
 
-        .value-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            color: #a98ff1;
-        }
+.value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #a98ff1;
+}
 
-        .buttons-container {
-            display: flex;
-            justify-content: flex-end;
-            padding: 20px;
-            gap: 20px;
-        }
+.buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    gap: 20px;
+}
 
-        .button-box, .button-round {
-            background-color: #a98ff1;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+.button-box, .button-round {
+    background-color: #a98ff1;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        .button-box:hover, .button-round:hover {
-            background-color: #ff6347;
-        }
+.button-box:hover, .button-round:hover {
+    background-color: #ff6347;
+}
 
-        .button-box {
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+.button-box {
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
 
-        .button-round {
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
+.button-round {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
 
-        .button-caption {
-            text-align: center;
-            color: #333;
-            font-size: 14px;
-            margin-top: 5px;
-        }
+.button-caption {
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+    margin-top: 5px;
+}
 
-        .hidden-card {
-            display: none;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 55%;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            position: fixed; /* Fix position */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-        }
+.hidden-card {
+    display: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 55%;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: fixed; /* Fix position */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
 
-        .symbol {
-            font-size: 20px;
-        }
+.symbol {
+    font-size: 20px;
+}
 
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
 
-        
-        .container {
+.container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    
     border-radius: 20px;
 }
 
@@ -190,39 +188,39 @@
     height: auto; /* Ensure height adjusts based on content */
 }
 
-/* Optional: Set a fixed height if you want all boxes to have the same height */
 .box {
     height: 250px; /* Example fixed height */
     overflow: hidden; /* Ensure content fits within the box */
 }
+
 .rounded {
     border-radius: 20px; /* Adjust the value for more or less rounding */
 }
 
+.box img {
+    width: 100%;
+    height: auto;
+}
 
-        .box img {
-            width: 100%;
-            height: auto;
-        }
-        .large-view {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgb(136, 221, 247);
-            border: 1px solid #ccc;
-            padding: 20px;
-            z-index: 1000;
-            border-radius: 20px;
-        }
-        .large-view img {
-            width: 100%;
-            height: auto;
-        }
-        
+.large-view {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(136, 221, 247);
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    border-radius: 20px;
+}
 
-        /* Scrollable Table */
+.large-view img {
+    width: 100%;
+    height: auto;
+}
+
+/* Scrollable Table */
 table.scroll {
     width: 100%; /* Responsive width */
     max-width: 732px; /* Adjust based on content */
@@ -282,6 +280,89 @@ table.scroll tbody tr:last-child td {
     border-bottom: none; /* Remove bottom border on the last row */
 }
 
+/* Media Queries */
+
+/* For small screens (phones) */
+@media only screen and (max-width: 768px) {
+
+    /* Adjust content alignment for header and nav */
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .center-message {
+        font-size: 16px;
+        text-align: left;
+    }
+
+    .left-links, .right-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* Adjust cards container and value-card for mobile */
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 5px 10px;
+    }
+
+    .value-card {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+    /* Adjust buttons container and buttons */
+    .buttons-container {
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 10px;
+    }
+
+    .button-box, .button-round {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .button-round {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    /* Adjust hidden card width */
+    .hidden-card {
+        width: 90%;
+    }
+
+    /* Adjust .container and .box */
+    .container {
+        justify-content: center;
+    }
+
+    .box {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+    /* Scrollable table adjustments */
+    table.scroll {
+        max-width: 100%; /* Allow table to take full width */
+    }
+
+    table.scroll tbody {
+        max-height: 300px; /* Reduce max height */
+    }
+
+    table.scroll tbody td,
+    table.scroll thead th {
+        padding: 8px; /* Reduce padding */
+        font-size: 14px; /* Adjust font size */
+    }
+}
 
     </style>
     <script>
