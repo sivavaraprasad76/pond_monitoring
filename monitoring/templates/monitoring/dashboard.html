@@ -171,54 +171,7 @@ nav a:hover {
     z-index: 999;
 }
 
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    border-radius: 20px;
-}
 
-.box {
-    width: 23%;
-    margin-bottom: 1%;
-    border: 0px solid #ccc;
-    text-align: center;
-    cursor: pointer;
-    padding: 10px 5px; /* Reduce padding to decrease height */
-    height: auto; /* Ensure height adjusts based on content */
-}
-
-.box {
-    height: 250px; /* Example fixed height */
-    overflow: hidden; /* Ensure content fits within the box */
-}
-
-.rounded {
-    border-radius: 20px; /* Adjust the value for more or less rounding */
-}
-
-.box img {
-    width: 100%;
-    height: auto;
-}
-
-.large-view {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(136, 221, 247);
-    border: 1px solid #ccc;
-    padding: 20px;
-    z-index: 1000;
-    border-radius: 20px;
-}
-
-.large-view img {
-    width: 100%;
-    height: auto;
-}
 
 /* Scrollable Table */
 table.scroll {
@@ -364,6 +317,103 @@ table.scroll tbody tr:last-child td {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+/* Button Container and Buttons */
+.button-container {
+    display: flex;
+    flex-wrap: wrap; /* Wrap buttons to the next line on smaller screens */
+    gap: 10px;
+    justify-content: center; /* Center buttons horizontally */
+    padding: 10px; /* Add padding around button container */
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions for hover effects */
+}
+
+#btn1 { background-color: rgb(136, 221, 247); } /* Red */
+#btn2 { background-color: rgb(136, 221, 247); } /* Blue */
+#btn3 { background-color: rgb(136, 221, 247); } /* Green */
+#btn4 { background-color: rgb(136, 221, 247); } /* Orange */
+#btn5 { background-color: rgb(136, 221, 247); } /* Purple */
+#btn6 { background-color: rgb(136, 221, 247); } /* Cyan */
+#btn7 { background-color: rgb(136, 221, 247); } /* Amber */
+
+button:hover {
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+/* Modal Styles */
+#chartModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure modal is on top of other content */
+}
+
+#chartContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow for better visibility */
+    position: relative; /* Ensure modal content is positioned correctly */
+}
+
+#myChart {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* Media Queries */
+
+/* For small screens (phones) */
+@media only screen and (max-width: 768px) {
+
+    /* Button Container */
+    .button-container {
+        flex-direction: column; /* Stack buttons vertically on smaller screens */
+        align-items: center; /* Center buttons */
+        gap: 10px;
+    }
+
+    /* Buttons */
+    button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    /* Modal */
+    #chartContainer {
+        width: 90%; /* Increase width on smaller screens */
+        max-width: none; /* Remove max-width restriction */
+    }
+}
+
+
     </style>
     <script>
         function showCard(cardId) {
@@ -434,7 +484,7 @@ table.scroll tbody tr:last-child td {
             <div class="left-links">
                 <a href="{% url 'dashboard' %}">Pond Monitoring</a>
             </div>
-            <div class="center-message">
+            <div class="center-message" style="padding-top: 10px; padding-bottom: 10px;">
                 Welcome, {{ username }}
             </div>
             <div class="right-links">
@@ -450,7 +500,7 @@ table.scroll tbody tr:last-child td {
     </div>
 
     <!-- Cards container for values -->
-    <div class="cards-container">
+    <div class="cards-container" >
         <div class="value-card">
             <h3>Dissolved Oxygen</h3>
             <p class="value">{{ current_values.dissolved_oxygen|floatformat:6 }} mg/L</p>
@@ -578,58 +628,269 @@ table.scroll tbody tr:last-child td {
     <!-- Overlay -->
     <div id="overlay" class="overlay" onclick="hideCard()"></div>
 
-    <div class="container">
-        <div class="box" onclick="showLargeView('data:image/png;base64,{{ all_data_graph }}', 'All Data vs Time')">
-            {% if all_data_graph %}
-            <img src="data:image/png;base64,{{ all_data_graph }}" class="img-fluid rounded" alt="All Data Graph">
-        {% endif %}
-            
-        </div>
-        <div class="box" onclick="showLargeView('data:image/png;base64,{{ do_graph }}', 'Dissolved Oxygen (mg/L) vs Time')">
-            
-            {% if do_graph %}
-                            <img src="data:image/png;base64,{{ do_graph }}" class="img-fluid rounded" alt="Dissolved Oxygen Graph">
-                        {% endif %}
-        </div>
-        <div class="box" onclick="showLargeView('data:image/png;base64,{{ ph_graph }}', 'pH vs Time')">
-            {% if ph_graph %}
-                          <img src="data:image/png;base64,{{ ph_graph }}" class="img-fluid rounded" alt="pH Graph">
-            {% endif %}
-            
-        </div>
-        <div class="box" onclick="showLargeView('data:image/png;base64,{{ temp_graph }}', 'Temperature (°C) vs Time')">
-            {% if temp_graph %}
-                            <img src="data:image/png;base64,{{ temp_graph }}" class="img-fluid rounded" alt="Temperature Graph">
-            {% endif %}
-            
-        </div>
-        <div class="box" onclick="showLargeView('data:image/png;base64,{{ turbidity_graph }}', 'Turbidity vs Time')">
-            {% if turbidity_graph %}
-                            <img src="data:image/png;base64,{{ turbidity_graph }}" class="img-fluid rounded" alt="Turbidity Graph">
-            {% endif %}
-        </div>
-        <div class="box" onclick="showLargeView('data:image/png;base64,{{ tds_graph }}', 'TDS vs Time')">
-            {% if tds_graph %}
-                          <img src="data:image/png;base64,{{ tds_graph }}" class="img-fluid rounded" alt="TDS Graph">
-            {% endif %}
-        </div>
-        <div class="box" onclick="showLargeView('data:image/png;base64,{{ do_temp_graph }}', 'Dissolved Oxygen (mg/L) vs Temperature (°C)')">
-            {% if do_temp_graph %}
-                          <img src="data:image/png;base64,{{ do_temp_graph }}" class="img-fluid rounded" alt="DO vs Temperature Graph">
-            {% endif %}
-        </div>
-        <div class="box" onclick="showLargeView('data:image/png;base64,{{ ph_temp_graph }}', 'pH vs Temperature')">
-            {% if ph_temp_graph %}
-                            <img src="data:image/png;base64,{{ ph_temp_graph }}" class="img-fluid rounded" alt="pH vs Temperature Graph">
-            {% endif %}
-        </div>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="cards-caption">
+        <h3>Graphs</h3>
     </div>
 
-    <div class="overlay" id="overlay" onclick="hideLargeView()"></div>
-    <div class="large-view" id="largeView">
-        <img id="largeImage" src="" alt="Large Image">
-        <p id="largeCaption"></p>
+    <div class="button-container">
+        <button id="btn1">All Parameters vs Time</button>
+        <button id="btn2">Dissolved Oxygen vs Time</button>
+        <button id="btn3">pH vs Time</button>
+        <button id="btn4">Temperature vs Time</button>
+        <button id="btn5">Turbidity vs Time</button>
+        <button id="btn6">TDS vs Time</button>
+        <button id="btn7">Dissolved oxygen vs Temperture</button>
     </div>
     
+    <div id="chartModal">
+        <div id="chartContainer">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const chartModal = document.getElementById('chartModal');
+        const chartContainer = document.getElementById('chartContainer');
+        let chartInstance;
+    
+        function generateDataForButton1(latest_records) {
+    const data = [];
+    
+    // Collect data points for each type of sensor measurement
+    const dissolvedOxygenData = [];
+    const phData = [];
+    const temperatureData = [];
+    const turbidityData = [];
+    const tdsData = [];
+    const labels = []; // This will be used for the x-axis (timestamps)
+
+    {% for record in latest_records %}
+        dissolvedOxygenData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.dissolved_oxygen|floatformat:2 }} });
+        phData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.ph|floatformat:2 }} });
+        temperatureData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.temperature|floatformat:2 }} });
+        turbidityData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.turbidity|floatformat:2 }} });
+        tdsData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.tds|floatformat:2 }} });
+        labels.push('{{ record.timestamp|date:"Y-m-d H:i:s" }}');
+    {% endfor %}
+
+    data.push({
+        label: 'Dissolved Oxygen',
+        data: dissolvedOxygenData,
+        fill: false,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        tension: 0.1
+    });
+
+    data.push({
+        label: 'pH',
+        data: phData,
+        fill: false,
+        borderColor: 'rgba(153, 102, 255, 1)',
+        tension: 0.1
+    });
+
+    data.push({
+        label: 'Temperature',
+        data: temperatureData,
+        fill: false,
+        borderColor: 'rgba(255, 159, 64, 1)',
+        tension: 0.1
+    });
+
+    data.push({
+        label: 'Turbidity',
+        data: turbidityData,
+        fill: false,
+        borderColor: 'rgba(255, 99, 132, 1)',
+        tension: 0.1
+    });
+
+    data.push({
+        label: 'TDS',
+        data: tdsData,
+        fill: false,
+        borderColor: 'rgba(54, 162, 235, 1)',
+        tension: 0.1
+    });
+
+    return data;
+}
+
+    
+function generateDataForButton2(latest_records) {
+    const data = [];
+    const dissolvedOxygenData = [];
+
+    {% for record in latest_records %}
+        dissolvedOxygenData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.dissolved_oxygen|floatformat:2 }} });
+    {% endfor %}
+
+    data.push({
+        label: 'Dissolved Oxygen',
+        data: dissolvedOxygenData,
+        fill: false,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        tension: 0.1
+    });
+
+    return data;
+}
+
+function generateDataForButton3(latest_records) {
+    const data = [];
+    const phData = [];
+
+    {% for record in latest_records %}
+        phData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.ph|floatformat:2 }} });
+    {% endfor %}
+
+    data.push({
+        label: 'pH',
+        data: phData,
+        fill: false,
+        borderColor: 'rgba(153, 102, 255, 1)',
+        tension: 0.1
+    });
+
+    return data;
+}
+
+function generateDataForButton4(latest_records) {
+    const data = [];
+    const temperatureData = [];
+
+    {% for record in latest_records %}
+        temperatureData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.temperature|floatformat:2 }} });
+    {% endfor %}
+
+    data.push({
+        label: 'Temperature',
+        data: temperatureData,
+        fill: false,
+        borderColor: 'rgba(255, 159, 64, 1)',
+        tension: 0.1
+    });
+
+    return data;
+}
+
+function generateDataForButton5(latest_records) {
+    const data = [];
+    const turbidityData = [];
+
+    {% for record in latest_records %}
+        turbidityData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.turbidity|floatformat:2 }} });
+    {% endfor %}
+
+    data.push({
+        label: 'Turbidity',
+        data: turbidityData,
+        fill: false,
+        borderColor: 'rgba(255, 99, 132, 1)',
+        tension: 0.1
+    });
+
+    return data;
+}
+
+function generateDataForButton6(latest_records) {
+    const data = [];
+    const tdsData = [];
+
+    {% for record in latest_records %}
+        tdsData.push({ x: '{{ record.timestamp|date:"Y-m-d H:i:s" }}', y: {{ record.tds|floatformat:2 }} });
+    {% endfor %}
+
+    data.push({
+        label: 'TDS',
+        data: tdsData,
+        fill: false,
+        borderColor: 'rgba(54, 162, 235, 1)',
+        tension: 0.1
+    });
+
+    return data;
+}
+
+function generateDataForButton7(latest_records) {
+    const data = [];
+    const dissolvedOxygenVsTemperature = [];
+
+    {% for record in latest_records %}
+        dissolvedOxygenVsTemperature.push({ x: {{ record.temperature|floatformat:2 }}, y: {{ record.dissolved_oxygen|floatformat:2 }} });
+    {% endfor %}
+
+    data.push({
+        label: 'Dissolved Oxygen vs Temperature',
+        data: dissolvedOxygenVsTemperature,
+        fill: false,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        tension: 0.1
+    });
+
+    return data;
+}
+
+    
+        function openChart(data) {
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+    
+            const labels = Array.from({ length: 10 }, (_, i) => `Label ${i + 1}`);
+    
+            const ctx = document.getElementById('myChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: data
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+    
+            chartModal.style.display = 'flex';
+        }
+    
+        function closeChart() {
+            chartModal.style.display = 'none';
+        }
+    
+        document.getElementById('btn1').addEventListener('click', () => openChart(generateDataForButton1()));
+        document.getElementById('btn2').addEventListener('click', () => openChart(generateDataForButton2()));
+        document.getElementById('btn3').addEventListener('click', () => openChart(generateDataForButton3()));
+        document.getElementById('btn4').addEventListener('click', () => openChart(generateDataForButton4()));
+        document.getElementById('btn5').addEventListener('click', () => openChart(generateDataForButton5()));
+        document.getElementById('btn6').addEventListener('click', () => openChart(generateDataForButton6()));
+        document.getElementById('btn7').addEventListener('click', () => openChart(generateDataForButton7()));
+    
+        chartModal.addEventListener('click', (e) => {
+            if (e.target === chartModal) {
+                closeChart();
+            }
+        });
+    </script>
 </body>
 </html>
