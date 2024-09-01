@@ -319,12 +319,44 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import PondData  # Import the PondData model
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import PondData
+import requests
+
+API_KEY = 'E3HwkhP9xUVGyjdJ6AXZvM50t2nI8lQ4LWeODzgub7Sq1YFTsCHTOW9nYZhXMI0LmkpSU8NVa6qxzfeG'
+
+def send_sms(api_key, message, numbers):
+    url = 'https://www.fast2sms.com/dev/bulkV2'
+    headers = {
+        'authorization': api_key,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    payload = {
+        'message': message,
+        'language': 'english',
+        'route': 'q',
+        'numbers': numbers
+    }
+    response = requests.post(url, headers=headers, data=payload)
+    print("Status Code:", response.status_code)
+    print("Response Text:", response.text)
+    try:
+        return response.json()
+    except requests.exceptions.JSONDecodeError:
+        return {
+            'status_code': response.status_code,
+            'text': response.text
+        }
+
+
+
 
 @csrf_exempt
 def receive_data(request):
     if request.method == 'POST':
         try:
-            # Parse the JSON data from the request body
             data = json.loads(request.body)
             
             dissolved_oxygen = float(data.get('dissolved_oxygen', 0))
@@ -332,7 +364,9 @@ def receive_data(request):
             turbidity = float(data.get('turbidity', 0))
             pH = float(data.get('pH', 0))
             TDS = float(data.get('TDS', 0))
-            phone = data.get('phonenumber',0)  # Replace with actual phone number if available
+            phone = data.get('phonenumber', '0')
+            alertmessage = data.get('alertmessage', '')
+            periodicmessage = data.get('periodicmessage', '')
 
             print(f"Received data - Dissolved Oxygen: {dissolved_oxygen}, Temperature: {temperature}, Turbidity: {turbidity}, pH: {pH}, TDS: {TDS}")
             
@@ -345,6 +379,31 @@ def receive_data(request):
                 turbidity=turbidity,
                 tds=TDS
             )
+
+            # Check alertmessage and send SMS if it's 'yes'
+            if alertmessage.lower() == 'yes':
+                message = f"Dissolved oxygen value is decreased and tablet dispenser is activated. Current readings: DO: {dissolved_oxygen/1000:.2f}, Temp: {temperature:.2f}, Turbidity: {turbidity:.2f}, pH: {pH:.2f}, TDS: {TDS:.2f}"
+                send_sms(API_KEY, message, phone)
+
+            # Check periodicmessage and send SMS with statistics if it's 'yes1'
+            if periodicmessage.lower() == 'yes1':
+                # Get the latest 10 records
+                latest_records = PondData.objects.order_by('-timestamp')[:10]
+                
+                # Calculate average and min-max
+                avg_data = calculate_average(latest_records)
+                min_max_data = calculate_min_max(latest_records)
+
+                # Prepare the message
+                message = "Periodic Update:\n"
+                message += f"Averages - DO: {avg_data['dissolved_oxygen']:.2f}, pH: {avg_data['pH']:.2f}, Temp: {avg_data['temperature']:.2f}, Turbidity: {avg_data['turbidity']:.2f}, TDS: {avg_data['tds']:.2f}\n"
+                message += f"Min/Max - DO: {min_max_data['dissolved_oxygen']['min']:.2f}/{min_max_data['dissolved_oxygen']['max']:.2f}, "
+                message += f"pH: {min_max_data['pH']['min']:.2f}/{min_max_data['pH']['max']:.2f}, "
+                message += f"Temp: {min_max_data['temperature']['min']:.2f}/{min_max_data['temperature']['max']:.2f}, "
+                message += f"Turbidity: {min_max_data['turbidity']['min']:.2f}/{min_max_data['turbidity']['max']:.2f}, "
+                message += f"TDS: {min_max_data['tds']['min']:.2f}/{min_max_data['tds']['max']:.2f}"
+
+                send_sms(API_KEY, message, phone)
             
             return JsonResponse({'status': 'success'}, status=201)
         except json.JSONDecodeError:
